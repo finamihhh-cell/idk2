@@ -1,0 +1,384 @@
+<!DOCTYPE html>  
+<html lang="mn">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <title>Миний Вэбсайт</title>  
+  <style>  
+    * {  
+      box-sizing: border-box;  
+      margin: 0;  
+      padding: 0;  
+    }  
+  
+    body {  
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;  
+      background: linear-gradient(135deg, #0f172a, #1e293b);  
+      color: #f8fafc;  
+      min-height: 100vh;  
+      display: flex;  
+      flex-direction: column;  
+      line-height: 1.6;  
+    }  
+  
+    /* Дээд цэс (Navbar) */  
+    nav {  
+      background: rgba(15, 23, 42, 0.85);  
+      backdrop-filter: blur(12px);  
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);  
+      padding: 16px 24px;  
+      position: sticky;  
+      top: 0;  
+      z-index: 100;  
+    }  
+  
+    .nav-container {  
+      max-width: 960px;  
+      margin: 0 auto;  
+      display: flex;  
+      justify-content: space-between;  
+      align-items: center;  
+      flex-wrap: wrap;  
+      gap: 12px;  
+    }  
+  
+    .logo {  
+      font-size: 1.3rem;  
+      font-weight: 700;  
+      color: #38bdf8;  
+      cursor: pointer;  
+    }  
+  
+    .nav-links {  
+      display: flex;  
+      gap: 8px;  
+      flex-wrap: wrap;  
+    }  
+  
+    .nav-btn {  
+      background: transparent;  
+      border: 1px solid transparent;  
+      color: #cbd5e1;  
+      padding: 8px 16px;  
+      border-radius: 8px;  
+      font-size: 0.95rem;  
+      font-weight: 500;  
+      cursor: pointer;  
+      transition: all 0.2s ease;  
+    }  
+  
+    .nav-btn:hover {  
+      color: #f8fafc;  
+      background: rgba(56, 189, 248, 0.1);  
+    }  
+  
+    .nav-btn.active {  
+      background: #38bdf8;  
+      color: #0f172a;  
+      font-weight: 600;  
+    }  
+  
+    /* Үндсэн хэсэг */  
+    main {  
+      flex: 1;  
+      width: 100%;  
+      max-width: 960px;  
+      margin: 32px auto;  
+      padding: 0 24px;  
+    }  
+  
+    /* Хуудас бүрийн хэв маяг */  
+    .page {  
+      display: none;  
+      background: rgba(30, 41, 59, 0.75);  
+      border: 1px solid rgba(148, 163, 184, 0.2);  
+      border-radius: 16px;  
+      padding: 36px;  
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);  
+      animation: fadeIn 0.3s ease;  
+    }  
+  
+    .page.active {  
+      display: block;  
+    }  
+  
+    @keyframes fadeIn {  
+      from { opacity: 0; transform: translateY(8px); }  
+      to { opacity: 1; transform: translateY(0); }  
+    }  
+  
+    h1 {  
+      font-size: 2.2rem;  
+      color: #38bdf8;  
+      margin-bottom: 12px;  
+    }  
+  
+    h2 {  
+      font-size: 1.5rem;  
+      color: #e2e8f0;  
+      margin-bottom: 16px;  
+    }  
+  
+    p {  
+      color: #cbd5e1;  
+      margin-bottom: 16px;  
+    }  
+  
+    .btn-primary {  
+      background: #38bdf8;  
+      color: #0f172a;  
+      border: none;  
+      padding: 12px 24px;  
+      font-size: 1rem;  
+      font-weight: 600;  
+      border-radius: 10px;  
+      cursor: pointer;  
+      transition: transform 0.15s ease, background 0.2s ease;  
+      display: inline-block;  
+      margin-top: 8px;  
+    }  
+  
+    .btn-primary:hover {  
+      background: #7dd3fc;  
+      transform: translateY(-2px);  
+    }  
+  
+    /* Картуудын сүлжээ (Grid) */  
+    .grid {  
+      display: grid;  
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+      gap: 20px;  
+      margin-top: 20px;  
+    }  
+  
+    .card {  
+      background: rgba(15, 23, 42, 0.65);  
+      border: 1px solid rgba(148, 163, 184, 0.15);  
+      border-radius: 12px;  
+      padding: 20px;  
+      transition: transform 0.2s ease, border-color 0.2s ease;  
+    }  
+  
+    .card:hover {  
+      transform: translateY(-4px);  
+      border-color: #38bdf8;  
+    }  
+  
+    .card h3 {  
+      color: #38bdf8;  
+      margin-bottom: 8px;  
+      font-size: 1.15rem;  
+    }  
+  
+    .tag {  
+      display: inline-block;  
+      background: rgba(56, 189, 248, 0.15);  
+      color: #38bdf8;  
+      padding: 4px 10px;  
+      border-radius: 6px;  
+      font-size: 0.8rem;  
+      margin-right: 6px;  
+      margin-top: 8px;  
+    }  
+  
+    /* Холбоо барих маягт (Form) */  
+    .form-group {  
+      margin-bottom: 16px;  
+    }  
+  
+    label {  
+      display: block;  
+      margin-bottom: 6px;  
+      color: #e2e8f0;  
+      font-weight: 500;  
+    }  
+  
+    input, textarea {  
+      width: 100%;  
+      padding: 12px;  
+      border-radius: 8px;  
+      border: 1px solid rgba(148, 163, 184, 0.3);  
+      background: rgba(15, 23, 42, 0.8);  
+      color: #f8fafc;  
+      font-size: 1rem;  
+      font-family: inherit;  
+    }  
+  
+    input:focus, textarea:focus {  
+      outline: none;  
+      border-color: #38bdf8;  
+    }  
+  
+    .success-msg {  
+      display: none;  
+      margin-top: 16px;  
+      padding: 12px 16px;  
+      background: rgba(34, 197, 94, 0.2);  
+      border: 1px solid #22c55e;  
+      color: #86efac;  
+      border-radius: 8px;  
+    }  
+  
+    /* Доод хэсэг (Footer) */  
+    footer {  
+      text-align: center;  
+      padding: 20px;  
+      color: #94a3b8;  
+      font-size: 0.9rem;  
+      border-top: 1px solid rgba(148, 163, 184, 0.15);  
+    }  
+  </style>  
+</head>  
+<body>  
+  
+  <!-- Цэс -->  
+  <nav>  
+    <div class="nav-container">  
+      <div class="logo" onclick="showPage('home')">МинийСайт</div>  
+      <div class="nav-links">  
+        <button class="nav-btn active" data-target="home" onclick="showPage('home')">Нүүр</button>  
+        <button class="nav-btn" data-target="about" onclick="showPage('about')">Миний тухай</button>  
+        <button class="nav-btn" data-target="projects" onclick="showPage('projects')">Бүтээлүүд</button>  
+        <button class="nav-btn" data-target="contact" onclick="showPage('contact')">Холбоо барих</button>  
+      </div>  
+    </div>  
+  </nav>  
+  
+  <!-- Хуудаснууд -->  
+  <main>  
+    <!-- 1. НҮҮР ХУУДАС -->  
+    <section id="home" class="page active">  
+      <h1>Сайн байна уу! Тавтай морил</h1>  
+      <p>  
+        Энэ бол HTML, CSS болон JavaScript ашиглан бүтээсэн олон хуудастай вэбсайтын загвар юм.   
+        Дээрх цэснээс хүссэн хуудас руугаа шилжиж үзнэ үү.  
+      </p>  
+      <button class="btn-primary" onclick="showPage('projects')">Бүтээлүүд үзэх &rarr;</button>  
+  
+      <div class="grid" style="margin-top: 32px;">  
+        <div class="card">  
+          <h3>Хурдан ажиллагаа</h3>  
+          <p>Хуудас дахин ачаалагдахгүйгээр шууд шилждэг орчин үеийн бүтэцтэй.</p>  
+        </div>  
+        <div class="card">  
+          <h3>Бүх дэлгэцэнд таарна</h3>  
+          <p>Компьютер, таблет болон гар утасны дэлгэцэнд цэвэрхэн харагдана.</p>  
+        </div>  
+      </div>  
+    </section>  
+  
+    <!-- 2. МИНИЙ ТУХАЙ ХУУДАС -->  
+    <section id="about" class="page">  
+      <h1>Миний тухай</h1>  
+      <p>  
+        Сайн байна уу! Би вэб хөгжүүлэлт болон технологид сонирхолтой сурагч/хөгжүүлэгч байна.   
+        Шинэ зүйл сурч, өөрийн санааг бодит вэб хуудас болгон бүтээх дуртай.  
+      </p>  
+      <h2>Миний ур чадварууд</h2>  
+      <div class="grid">  
+        <div class="card">  
+          <h3>HTML5 & CSS3</h3>  
+          <p>Вэб хуудасны үндсэн бүтэц, орчин үеийн загвар дизайн гаргах.</p>  
+        </div>  
+        <div class="card">  
+          <h3>JavaScript</h3>  
+          <p>Хуудсыг хөдөлгөөнтэй, хэрэглэгчтэй харилцдаг болгох.</p>  
+        </div>  
+        <div class="card">  
+          <h3>Асуудал шийдвэрлэх</h3>  
+          <p>Алгоритм сэтгэлгээ, цэгцтэй код бичих дадал.</p>  
+        </div>  
+      </div>  
+    </section>  
+  
+    <!-- 3. БҮТЭЭЛҮҮД ХУУДАС -->  
+    <section id="projects" class="page">  
+      <h1>Миний бүтээлүүд</h1>  
+      <p>Миний хийж гүйцэтгэсэн жижиг төслүүд болон дадлагын ажлууд:</p>  
+      <div class="grid">  
+        <div class="card">  
+          <h3>Хувийн танилцуулга сайт</h3>  
+          <p>Өөрийн тухай мэдээлэл, ур чадвараа багтаасан анхны вэбсайт.</p>  
+          <span class="tag">HTML</span>  
+          <span class="tag">CSS</span>  
+        </div>  
+        <div class="card">  
+          <h3>Тооны машин</h3>  
+          <p>Энгийн болон инженерийн үйлдэл хийдэг вэб тооны машин.</p>  
+          <span class="tag">HTML</span>  
+          <span class="tag">JavaScript</span>  
+        </div>  
+        <div class="card">  
+          <h3>Хийх ажлын жагсаалт</h3>  
+          <p>Өдөр тутмын төлөвлөгөөгөө тэмдэглэж, хадгалдаг апп.</p>  
+          <span class="tag">CSS</span>  
+          <span class="tag">JavaScript</span>  
+        </div>  
+      </div>  
+    </section>  
+  
+    <!-- 4. ХОЛБОО БАРИХ ХУУДАС -->  
+    <section id="contact" class="page">  
+      <h1>Холбоо барих</h1>  
+      <p>Санал хүсэлт илгээх эсвэл хамтран ажиллахыг хүсвэл доорх хэсгийг бөглөнө үү.</p>  
+      <form onsubmit="handleSubmit(event)">  
+        <div class="form-group">  
+          <label for="name">Таны нэр</label>  
+          <input type="text" id="name" placeholder="Нэрээ оруулна уу" required />  
+        </div>  
+        <div class="form-group">  
+          <label for="email">И-мэйл хаяг</label>  
+          <input type="email" id="email" placeholder="name@example.com" required />  
+        </div>  
+        <div class="form-group">  
+          <label for="message">Зурвас</label>  
+          <textarea id="message" rows="4" placeholder="Энд зурвасаа бичнэ үү..." required></textarea>  
+        </div>  
+        <button type="submit" class="btn-primary">Илгээх</button>  
+      </form>  
+      <div id="successMsg" class="success-msg">  
+        Таны зурвас амжилттай илгээгдлээ! Баярлалаа.  
+      </div>  
+    </section>  
+  </main>  
+  
+  <!-- Доод хэсэг -->  
+  <footer>  
+    <p>&copy; 2026 Миний Вэбсайт. Бүх эрх хуулиар хамгаалагдсан.</p>  
+  </footer>  
+  
+  <!-- Хуудас солих JavaScript -->  
+  <script>  
+    function showPage(pageId) {  
+      // Бүх хуудсыг нуух  
+      document.querySelectorAll('.page').forEach(page => {  
+        page.classList.remove('active');  
+      });  
+  
+      // Сонгосон хуудсыг харуулах  
+      document.getElementById(pageId).classList.add('active');  
+  
+      // Цэсний идэвхтэй төлөвийг шинэчлэх  
+      document.querySelectorAll('.nav-btn').forEach(btn => {  
+        btn.classList.remove('active');  
+        if (btn.getAttribute('data-target') === pageId) {  
+          btn.classList.add('active');  
+        }  
+      });  
+  
+      // Хуудас солигдоход дээш гүйлгэх  
+      window.scrollTo({ top: 0, behavior: 'smooth' });  
+    }  
+  
+    function handleSubmit(event) {  
+      event.preventDefault();  
+      const msg = document.getElementById('successMsg');  
+      msg.style.display = 'block';  
+      event.target.reset();  
+      setTimeout(() => {  
+        msg.style.display = 'none';  
+      }, 4000);  
+    }  
+  </script>  
+</body>  
+</html>  
